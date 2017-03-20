@@ -2,3 +2,4 @@
 - Skrivit och lämnat in projektspec
 - Kopplat in MPU till Arduino UNO. Läst av värden.
 - Lyckats räkna steg med buren Arduino UNO + Accelerometer
+- Kopplat in vibrationssensor till Arduino UNO. Läst av värden
