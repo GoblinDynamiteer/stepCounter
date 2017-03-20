@@ -7,7 +7,7 @@ const int MPU_addr=0x68;  // I2C address of the MPU-6050
 #define STEPDELAY 300
 int16_t AcX, AcY, AcZ, combined, stepDelay = STEPDELAY;
 int steps = 0, offset = 8100;
-void setup(){
+void setup(){ // SDA / SCL for Arduino UNO: A4 / A5
   Wire.begin();
   Wire.beginTransmission(MPU_addr);
   Wire.write(0x6B);  // PWR_MGMT_1 register
