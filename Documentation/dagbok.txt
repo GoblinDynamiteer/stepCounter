@@ -1,6 +1,9 @@
 2017-03-20
 - Skrivit och lämnat in projektspec
+- Initierat Git & GitHub för projektet
 - Kopplat in MPU till Arduino UNO. Läst av värden. (SDA = A4 SCL=A5 För wire.h)
 - 560 Ohms-resistor för att ta ner volt från 5V till ca 3V
 - Lyckats räkna steg med buren Arduino UNO + Accelerometer
 - Kopplat in vibrationssensor till Arduino UNO. Läst av värden
+- Ritat kopplingsscheman för MPU, vibsensor, och 5V till 3V
+- Blinksketch för Attiny85, inför MPU test
