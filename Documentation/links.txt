@@ -1,1 +1,2 @@
 http://www.embedds.com/programming-avr-i2c-interface/
+https://github.com/g4lvanix/I2C-master-lib
