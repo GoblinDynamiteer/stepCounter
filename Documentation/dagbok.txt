@@ -7,3 +7,9 @@
 - Kopplat in vibrationssensor till Arduino UNO. Läst av värden
 - Ritat kopplingsscheman för MPU, vibsensor, och 5V till 3V
 - Blinksketch för Attiny85, inför MPU test
+
+2017-03-21
+- Färdigbyggt prototyp, visat peter
+- Jobbat med I2C: Scannat adresser med i2c-scanner
+- Läst datablad
+- Skapat kodtester för display OLED, 2x I2c
