@@ -6,6 +6,7 @@
 const int MPU_addr=0x68;  // I2C address of the MPU-6050
 #define STEPDELAY 300
 int16_t AcX, AcY, AcZ, combined, stepDelay = STEPDELAY;
+unsigned long timer = 0;
 int steps = 0, offset = 8100;
 void setup(){ // SDA / SCL for Arduino UNO: A4 / A5
   Wire.begin();
@@ -24,10 +25,10 @@ void loop(){
   AcY=Wire.read()<<8|Wire.read();  // 0x3D (ACCEL_YOUT_H) & 0x3E (ACCEL_YOUT_L)
   AcZ=Wire.read()<<8|Wire.read();  // 0x3F (ACCEL_ZOUT_H) & 0x40 (ACCEL_ZOUT_L)
   combined = ((AcX+AcY+AcZ) / 3) - offset;
-  if(((combined <= -7000) || (combined >= 7000)) && (stepDelay <= 0)) {
+  if(((combined <= -7000) || (combined >= 7000)) &&
+  ((millis() - timer) > STEPDELAY)) {
       steps++;
       Serial.println(steps);
-      stepDelay = STEPDELAY;
+      timer = millis();
   }
-  stepDelay--;
 }
