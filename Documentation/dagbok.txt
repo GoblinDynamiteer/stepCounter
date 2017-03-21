@@ -15,3 +15,4 @@
 - Skapat kodtester för display OLED, 2x I2c
 - Forskat om Termnial-output för Atmel Studio
 - Forskat I2C-lib för AVR
+- Studerat wire.h - bibliotek för arduino
