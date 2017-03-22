@@ -2,6 +2,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
+
+#define F_CPU 1000000UL
 #include <util/delay.h>
 #include <math.h>  //include libm
 
@@ -94,13 +96,15 @@ int main(void) {
 		uart_puts("\r\n");
 
 		uart_puts("\r\n");
-		if(azg > 0.3){
+
+		/*	 Tänd LED 1 sek	*/
+		double combinedAcc = fabs(axg) + fabs(ayg) + fabs(azg);
+		if(combinedAcc > 2.0){
 			PORTB |= (1<<PB0);
-		}
-		else{
+			_delay_ms(1000);
 			PORTB &= ~(1<<PB0);
 		}
-		_delay_ms(500);
+		_delay_ms(1);
 		#endif
 
 		#if MPU6050_GETATTITUDE == 1 || MPU6050_GETATTITUDE == 2
