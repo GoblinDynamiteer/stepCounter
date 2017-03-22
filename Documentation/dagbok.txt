@@ -1,3 +1,6 @@
+Dagbok
+Inför Rapport
+
 2017-03-20
 - Skrivit och lämnat in projektspec
 - Initierat Git & GitHub för projektet
@@ -16,3 +19,10 @@
 - Forskat om Termnial-output för Atmel Studio
 - Forskat I2C-lib för AVR
 - Studerat wire.h - bibliotek för arduino
+
+2017-03-22
+- Skapat checklista
+- Skapat inköpslista
+- Hittat bibliotek till MPU: avr_lib_mpu6050
+- Lyckats tända LED med MPU via Atmega328p, mha avr_lib_mpu6050
+- Studerat kod för I2C exempel twitest.c
