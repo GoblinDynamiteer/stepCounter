@@ -7,7 +7,7 @@ const int MPU_addr=0x68;  // I2C address of the MPU-6050
 #define STEPDELAY 300
 int16_t AcX, AcY, AcZ, combined, stepDelay = STEPDELAY;
 unsigned long timer = 0;
-int steps = 0, offset = 8100;
+int steps = 0, offset = 0;
 
 int16_t readAccX(void);
 int16_t readAccY(void);
