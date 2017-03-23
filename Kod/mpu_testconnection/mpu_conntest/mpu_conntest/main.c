@@ -6,13 +6,9 @@
 
 #define F_CPU 1000000UL
 #include <util/delay.h>
-#include <math.h>  //include libm
+#include <math.h>
 
 #include "mpu6050/mpu6050.h"
-
-//#define X MPU6050_RA_ACCEL_XOUT_H //Adress för accelerationdata X
-//#define Y MPU6050_RA_ACCEL_YOUT_H //Adress för accelerationdata Y
-//#define Z MPU6050_RA_ACCEL_ZOUT_H //Adress för accelerationdata Z
 
 #define X 0x3B //Adress för accelerationdata X
 #define Y 0x3D //Adress för accelerationdata Y
@@ -20,26 +16,23 @@
 
 double getAcc(int addr);
 
-
 int main(void) {
+	/*	 Pin output för PB0	*/
 	DDRB = PB0;
-	
-	//init interrupt
+	/*	 Init interrupt	*/
 	sei();
-
-	//init mpu6050
+	/*	 Init MPU 6050	*/
 	mpu6050_init();
 	_delay_ms(50);
 
 	while(1) {
-		/*	 Tänd LED 1 sek	*/
 		double combinedAcc = fabs(getAcc(X)) + fabs(getAcc(Y)) + fabs(getAcc(Z));
 		if(combinedAcc > 2.0){
+			/*	 Tänd LED i en sekund	*/
 			PORTB |= (1<<PB0);
 			_delay_ms(1000);
 			PORTB &= ~(1<<PB0);
 		}
-		_delay_ms(1);
 	}
 }
 
