@@ -26,3 +26,7 @@ Inför Rapport
 - Hittat bibliotek till MPU: avr_lib_mpu6050
 - Lyckats tända LED med MPU via Atmega328p, mha avr_lib_mpu6050
 - Studerat kod för I2C exempel twitest.c
+
+2017-03-23
+- Skapat part för Atmega 328p i Fritzing
+- Skapat kretsschema för uppvisning av prototyp till BFC
