@@ -30,3 +30,4 @@ Inför Rapport
 2017-03-23
 - Skapat part för Atmega 328p i Fritzing
 - Skapat kretsschema för uppvisning av prototyp till BFC
+- Skapat ordlista för termer och förkortningar
