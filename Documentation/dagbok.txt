@@ -31,5 +31,6 @@ Inför Rapport
 - Skapat part för Atmega 328p i Fritzing
 - Skapat kretsschema för uppvisning av prototyp till BFC
 - Skapat ordlista för termer och förkortningar
+- Möte med skolan för att köpa in delar till projektet: godkänt
 - Studerat bibliotek: avr_lib_mpu6050
 - Byggt egen funktion för att hämta Acc-data från MPU via register
