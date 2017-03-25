@@ -1,3 +1,4 @@
 PWM: Port(ar) på Atmega328p etc. Pulse Width Modulation - Sätt att simulera analog signal med digital output
 AREF: Analog Reference, port på Atmega328p etc
 Pull Up-resistor: En högohmig resistor som kopplas mellan signalkabel och +V. Förhindrar störningar (etc?)
+MPU-9250: Multichip Module (MCM) som har 3-axel gyro, 3-axel accelerometer, 3-axel magnetometer och DMP (Digital Motion Processor)
