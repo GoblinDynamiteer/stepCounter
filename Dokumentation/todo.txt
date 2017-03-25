@@ -1,9 +1,0 @@
-- Kopplingsschema
-- Datablad
-- Komponentlista
-- Leverans 1 (1 vecka)
-	- Checklista JA/NEJ: Tidpunkt
-
-	EX:
-	Bygg Hårvara1	CHECKBOX
-	Bygg Hårvara2	CHECKBOX
