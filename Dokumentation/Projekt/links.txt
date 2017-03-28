@@ -3,3 +3,4 @@ https://github.com/g4lvanix/I2C-master-lib
 http://www.nongnu.org/avr-libc/user-manual/group__twi__demo.html
 http://playground.arduino.cc/Main/WireLibraryDetailedReference
 https://learn.sparkfun.com/tutorials/micro-oled-breakout-hookup-guide
+https://github.com/thaletterb/ssd1306_avr8
