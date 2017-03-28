@@ -1,0 +1,7 @@
+PWM: Port(ar) på Atmega328p etc. Pulse Width Modulation - Sätt att simulera analog signal med digital output
+AREF: Analog Reference, port på Atmega328p etc
+Pull Up-resistor: En högohmig resistor som kopplas mellan signalkabel och +V. Förhindrar störningar (etc?)
+MPU-9250: Multichip Module (MCM) som har 3-axel gyro, 3-axel accelerometer, 3-axel magnetometer och DMP (Digital Motion Processor)
+Accelerometer: En typ av mätgivare vilken ger ifrån sig en elektrisk signal som på något sätt är proportionell mot den hastighetsförändring (acceleration) givaren utsätts för. 
+Magnetometer: Ett vetenskapligt mätinstrument som används för att mäta styrkan och/eller riktningen hos magnetfältet runt instrumentet. Kan användas för kompassfunktionalitet.
+VDD: Benämning på anslutning för strömkälla på enheter (IC-kretsar etc), pluspol.

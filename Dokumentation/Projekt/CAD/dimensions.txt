@@ -1,0 +1,6 @@
+Atmega328p: 		37.4 x 6.76 x 3.28 mm
+Micro OLED:		Skärm: 18.5 x 18 mm
+			Kort: 21 x 20 mm
+MPU-9250:		MÄT!
+ESP8266:		MÄT!
+KopplingsPlatta:	TBD/CAD

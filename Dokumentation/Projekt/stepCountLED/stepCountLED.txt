@@ -1,0 +1,16 @@
+Visa antal steg med LED:
+
+Alternativ / Förslag:
+
+***** 8 st LED *****************************
+Binärt med 8 st LED: MAX 1111 1111 = 255 st.
+
+***** 4 st RGB LED *************************
+RGB-LED:
+AV 00
+R  01
+G  10
+B  11
+
+Behövs 4st för 8 bitar för binär representation.
+ingen direkt fördel över 8 st LED, dock behövs ej resistorer.
