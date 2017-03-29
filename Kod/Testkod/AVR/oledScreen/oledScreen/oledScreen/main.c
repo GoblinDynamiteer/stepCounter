@@ -1,7 +1,5 @@
 #include <avr/io.h>
 #include <string.h>
-#include <stdlib.h>
-#include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
 #define F_CPU 1000000UL
@@ -155,7 +153,7 @@ int main(void)
     //_delay_ms(1000);
     clearBuffer(buffer);
     ////lcd_draw_char(10, 2, 'B', buffer);
-    lcd_draw_string(10, 0, "JOHAN!", buffer);
+    lcd_draw_string(50, 5, "JOHAN!", buffer);
     //lcd_draw_string(10, 7, "Elegant Circuits", buffer);
     drawBuffer(0,0, buffer);
     i2c_stop();

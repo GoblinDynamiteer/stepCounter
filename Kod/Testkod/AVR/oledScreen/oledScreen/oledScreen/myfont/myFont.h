@@ -1,7 +1,9 @@
 // My fonts
 
 #ifndef MYFONT
-#define MYFONT
+#define MYFONT\
+
+
 
 extern unsigned char Ascii_1[97][5]={     // Refer to "Times New Roman" Font Database...
                                    //   Basic Characters

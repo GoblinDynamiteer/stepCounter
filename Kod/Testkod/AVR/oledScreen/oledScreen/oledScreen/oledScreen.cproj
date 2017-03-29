@@ -130,6 +130,9 @@
     <Compile Include="myfont\myFont.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="myfont\myFont2.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="i2chw\" />

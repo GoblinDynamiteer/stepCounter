@@ -13,11 +13,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   4 .debug_aranges 000000a0  00000000  00000000  00000ab0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000f16  00000000  00000000  00000b50  2**0
+  5 .debug_info   00000f17  00000000  00000000  00000b50  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000838  00000000  00000000  00001a66  2**0
+  6 .debug_abbrev 00000838  00000000  00000000  00001a67  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   000007c8  00000000  00000000  0000229e  2**0
+  7 .debug_line   000007c8  00000000  00000000  0000229f  2**0
                   CONTENTS, READONLY, DEBUGGING
   8 .debug_frame  00000174  00000000  00000000  00002a68  2**2
                   CONTENTS, READONLY, DEBUGGING
@@ -659,13 +659,13 @@ int main(void)
  3b2:	91 e0       	ldi	r25, 0x01	; 1
  3b4:	0e 94 c8 00 	call	0x190	; 0x190 <clearBuffer>
     ////lcd_draw_char(10, 2, 'B', buffer);
-    lcd_draw_string(10, 0, "JOHAN!", buffer);
+    lcd_draw_string(50, 5, "JOHAN!", buffer);
  3b8:	20 e0       	ldi	r18, 0x00	; 0
  3ba:	31 e0       	ldi	r19, 0x01	; 1
  3bc:	45 ee       	ldi	r20, 0xE5	; 229
  3be:	56 e0       	ldi	r21, 0x06	; 6
- 3c0:	60 e0       	ldi	r22, 0x00	; 0
- 3c2:	8a e0       	ldi	r24, 0x0A	; 10
+ 3c0:	65 e0       	ldi	r22, 0x05	; 5
+ 3c2:	82 e3       	ldi	r24, 0x32	; 50
  3c4:	0e 94 50 01 	call	0x2a0	; 0x2a0 <lcd_draw_string>
     //lcd_draw_string(10, 7, "Elegant Circuits", buffer);
     drawBuffer(0,0, buffer);
