@@ -34,13 +34,14 @@ int main(void) {
 		double combinedAcc = fabs(getAcc(X)) + fabs(getAcc(Y)) + fabs(getAcc(Z));
 		if(combinedAcc > 2.0){
 			steps++;
+			u8g_FirstPage(&u8g);
+			do{
+				drawSteps(steps);
+			}while(u8g_NextPage(&u8g));
 		}
-		u8g_FirstPage(&u8g);
-		do{
-			drawSteps(steps);
-		}while(u8g_NextPage(&u8g));
-		u8g_Delay(100);
-		_delay_ms(300);
+		//u8g_Delay(100);
+		steps++;
+		_delay_ms(1000);
 	}
 }
 
@@ -60,7 +61,7 @@ double getAcc(int addr){
 }
 
 void drawSteps(uint16_t steps){
-	char csteps[6] = "";
+	char csteps[4] = "";
 	itoa(steps, csteps, 10);
 	u8g_SetFont(&u8g, u8g_font_fub14);
 	u8g_DrawStr(&u8g, 2, 16, csteps);
