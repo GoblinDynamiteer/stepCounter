@@ -21,11 +21,7 @@ void drawSteps(uint16_t steps);
 
 int main(void) {
 	u8g_InitI2C(&u8g, &u8g_dev_ssd1306_128x64_i2c, U8G_I2C_OPT_NONE);
-	#if defined(__AVR__)
-	  /* select minimal prescaler (max system speed) */
-	  CLKPR = 0x80;
-	  CLKPR = 0x00;
-	#endif
+
 
 	sei();
 	/*	 Init MPU 6050	*/
@@ -38,14 +34,13 @@ int main(void) {
 		double combinedAcc = fabs(getAcc(X)) + fabs(getAcc(Y)) + fabs(getAcc(Z));
 		if(combinedAcc > 2.0){
 			steps++;
-			u8g_FirstPage(&u8g);
-			do{
-				drawSteps((uint16_t)combinedAcc);
-			}while(u8g_NextPage(&u8g));
-			u8g_Delay(100);
-			_delay_ms(300);
 		}
-
+		u8g_FirstPage(&u8g);
+		do{
+			drawSteps(steps);
+		}while(u8g_NextPage(&u8g));
+		u8g_Delay(100);
+		_delay_ms(300);
 	}
 }
 
