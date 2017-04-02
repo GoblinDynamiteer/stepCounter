@@ -42,6 +42,7 @@
 #if defined(__AVR__)
 #include <avr/interrupt.h>
 #include <avr/io.h>
+#include <util/delay.h>
 #endif
 
 
@@ -114,26 +115,27 @@ void sys_init(void)
 #endif
 }
 
-void draw(void)
-{
-  u8g_SetFont(&u8g, u8g_font_fub14);
-  u8g_DrawStr(&u8g, 2, 16, "TEST123");
+void drawSteps(int steps){
+	char counterString[6] = "\0";
+	itoa(steps, counterString, 10);
+	u8g_FirstPage(&u8g);
+	do{
+		u8g_DrawStr(&u8g, 2, 16, counterString);
+	}while(u8g_NextPage(&u8g));
 }
 
-int main(void)
-{
-  sys_init();
-  u8g_setup();
 
-  for(;;)
-  {  
-    u8g_FirstPage(&u8g);
-    do
-    {
-      draw();
-    } while ( u8g_NextPage(&u8g) );
-    u8g_Delay(100);
-  }
-  
+int main(void){
+	int counter = 0;
+	sys_init();
+	u8g_setup();
+	u8g_SetFont(&u8g, u8g_font_fub14);
+	while(counter < 1001){
+		if(!(++counter % 10)){
+			drawSteps(counter);
+		}
+	}
 }
+
+
 
