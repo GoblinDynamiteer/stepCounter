@@ -16,36 +16,32 @@
 
 u8g_t u8g;
 
-double getAcc(int addr);
+int16_t getAcc(int addr);
 void drawSteps(uint16_t steps);
+void drawAccData(int16_t x, int16_t y, int16_t z);
 
 int main(void) {
 	u8g_InitI2C(&u8g, &u8g_dev_ssd1306_128x64_i2c, U8G_I2C_OPT_NONE);
-
+	u8g_SetFont(&u8g, u8g_font_fub14);
+	//int16_t combinedAcc = 0;
+	int16_t accX = 0;
+	int16_t accY = 0;
+	int16_t accZ = 0;
+	//uint16_t steps = 0;
 
 	sei();
 	/*	 Init MPU 6050	*/
 	mpu6050_init();
 	_delay_ms(50);
 
-	uint16_t steps = 0;
-
 	while(1) {
-		double combinedAcc = fabs(getAcc(X)) + fabs(getAcc(Y)) + fabs(getAcc(Z));
-		if(combinedAcc > 2.0){
-			steps++;
-			u8g_FirstPage(&u8g);
-			do{
-				drawSteps(steps);
-			}while(u8g_NextPage(&u8g));
-		}
-		//u8g_Delay(100);
-		steps++;
-		_delay_ms(1000);
+		accX = getAcc(X); accY = getAcc(Y); accZ = getAcc(Z);
+		drawAccData(accX, accY, accZ);
+		_delay_ms(100);
 	}
 }
 
-double getAcc(int addr){
+int16_t getAcc(int addr){
 	int16_t ret = 0;
 	uint8_t buffer[2];
 	i2c_start(MPU6050_ADDR | I2C_WRITE);
@@ -57,12 +53,30 @@ double getAcc(int addr){
 	buffer[1] = i2c_readNak();
 	i2c_stop();
 	ret = (((int16_t)buffer[0]) << 8) | buffer[1];
-	return (double)(ret)/MPU6050_AGAIN; //Konverterar till g?
+	return ret;
+	//return (double)(ret)/MPU6050_AGAIN; //Konverterar till g?
 }
 
 void drawSteps(uint16_t steps){
-	char csteps[4] = "";
-	itoa(steps, csteps, 10);
-	u8g_SetFont(&u8g, u8g_font_fub14);
-	u8g_DrawStr(&u8g, 2, 16, csteps);
+	char counterString[6] = "\0";
+	itoa(steps, counterString, 10);
+	u8g_FirstPage(&u8g);
+	do{
+		u8g_DrawStr(&u8g, 2, 16, counterString);
+	}while(u8g_NextPage(&u8g));
+}
+
+void drawAccData(int16_t x, int16_t y, int16_t z){
+	char ax[10] = "\0";
+	char ay[10] = "\0";
+	char az[10] = "\0";
+	itoa(x, ax, 10);
+	itoa(y, ay, 10);
+	itoa(z, az, 10);
+	u8g_FirstPage(&u8g);
+	do{
+		u8g_DrawStr(&u8g, 2, 16, ax);
+		u8g_DrawStr(&u8g, 2, 16*2 + 1, ay);
+		u8g_DrawStr(&u8g, 2, 16*3 + 2, az);
+	}while(u8g_NextPage(&u8g));
 }
