@@ -44,6 +44,12 @@ Inför Rapport
 - Fått SSD1306 128x64 att fungera med atmega328p
 - Lödit kontakt på SSD1306 64x48
 
-2017-03-29
+2017-03-30
 - Bytt bibliotek för SSD1306 till u8glib
 - Uppdaterat huvudkod - Utskrift av steg / sensordata till SSD1306-display
+
+2017-04-02
+- Skapat CAD-modeller för Atmega, breadboard, connector hona vinklad, socket
+- Laborerat med Display med Atmega328p - problem med hastigheter / frysningar
+
+
