@@ -14,36 +14,42 @@
 #define Y 0x3D //Adress f�r accelerationdata Y
 #define Z 0x3F //Adress f�r accelerationdata Z
 
+#define OFFSET_NUM 50
+
 u8g_t u8g;
 
 int16_t getAcc(int addr);
 void drawSteps(uint16_t steps);
+void drawString(char * string);
 void drawAccData(int16_t x, int16_t y, int16_t z);
+void getAccOffset(int16_t *ox, int16_t *oy, int16_t *oz);
 
 int main(void) {
 	u8g_InitI2C(&u8g, &u8g_dev_ssd1306_128x64_i2c, U8G_I2C_OPT_NONE);
-	u8g_SetFont(&u8g, u8g_font_fub14);
+	u8g_SetFont(&u8g, u8g_font_fub11);
 	//int16_t combinedAcc = 0;
-	int16_t accX = 0;
-	int16_t accY = 0;
-	int16_t accZ = 0;
+	int16_t accX = 0, accY = 0, accZ = 0;
+	int16_t xOffset = 0, yOffset = 0, zOffset = 0;
 	//uint16_t steps = 0;
-
+	getAccOffset(&xOffset, &yOffset, &zOffset);
 	sei();
 	/*	 Init MPU 6050	*/
 	mpu6050_init();
 	_delay_ms(50);
 
 	while(1) {
-		accX = getAcc(X); accY = getAcc(Y); accZ = getAcc(Z);
-		drawAccData(accX, accY, accZ);
-		_delay_ms(100);
+		//accX = getAcc(X) - xOffset; 
+		//accY = getAcc(Y); 
+		//accZ = getAcc(Z);
+		//drawAccData(accX, accY, accZ);
+		drawSteps(xOffset);
+		_delay_ms(5);
 	}
 }
 
 int16_t getAcc(int addr){
 	int16_t ret = 0;
-	uint8_t buffer[2];
+	uint8_t buffer[2]; //För att hålla två bytes med i2c_readAck
 	i2c_start(MPU6050_ADDR | I2C_WRITE);
 	i2c_write(addr);
 	_delay_us(10);
@@ -52,8 +58,9 @@ int16_t getAcc(int addr){
 	buffer[0] = i2c_readAck();
 	buffer[1] = i2c_readNak();
 	i2c_stop();
-	ret = (((int16_t)buffer[0]) << 8) | buffer[1];
-	return ret;
+	//ret = (((int16_t)buffer[0]) << 8) | buffer[1];
+	ret = ((buffer[0]) << 8) | buffer[1];
+	return fabs(ret);
 	//return (double)(ret)/MPU6050_AGAIN; //Konverterar till g?
 }
 
@@ -63,6 +70,13 @@ void drawSteps(uint16_t steps){
 	u8g_FirstPage(&u8g);
 	do{
 		u8g_DrawStr(&u8g, 2, 16, counterString);
+	}while(u8g_NextPage(&u8g));
+}
+
+void drawString(char * string){
+	u8g_FirstPage(&u8g);
+	do{
+		u8g_DrawStr(&u8g, 2, 16*2, string);
 	}while(u8g_NextPage(&u8g));
 }
 
@@ -79,4 +93,22 @@ void drawAccData(int16_t x, int16_t y, int16_t z){
 		u8g_DrawStr(&u8g, 2, 16*2 + 1, ay);
 		u8g_DrawStr(&u8g, 2, 16*3 + 2, az);
 	}while(u8g_NextPage(&u8g));
+}
+
+void getAccOffset(int16_t *ox, int16_t *oy, int16_t *oz){
+	int16_t accX = 0, accY = 0, accZ = 0;
+	drawString("Calibrating");
+	for(int i = 0; i < OFFSET_NUM; i++){
+		accX += getAcc(X);
+		accY += getAcc(Y); 
+		accZ += getAcc(Z); 
+		_delay_ms(10);
+	}
+	*ox = accX / OFFSET_NUM;
+	*oy = accY / OFFSET_NUM;
+	*oz = accZ / OFFSET_NUM;
+	drawString("Calibration Done");
+	_delay_ms(1000);
+	drawSteps(*ox);
+	_delay_ms(1000);
 }
