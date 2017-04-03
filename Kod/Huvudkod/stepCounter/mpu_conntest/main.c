@@ -14,7 +14,7 @@
 #define Y 0x3D //Adress f�r accelerationdata Y
 #define Z 0x3F //Adress f�r accelerationdata Z
 
-#define OFFSET_NUM 50
+#define OFFSET_NUM 10
 
 u8g_t u8g;
 
@@ -27,7 +27,7 @@ void getAccOffset(int16_t *ox, int16_t *oy, int16_t *oz);
 int main(void) {
 	u8g_InitI2C(&u8g, &u8g_dev_ssd1306_128x64_i2c, U8G_I2C_OPT_NONE);
 	u8g_SetFont(&u8g, u8g_font_fub11);
-	//int16_t combinedAcc = 0;
+	int16_t combinedAcc = 0;
 	int16_t accX = 0, accY = 0, accZ = 0;
 	int16_t xOffset = 0, yOffset = 0, zOffset = 0;
 	//uint16_t steps = 0;
@@ -38,11 +38,16 @@ int main(void) {
 	_delay_ms(50);
 
 	while(1) {
-		//accX = getAcc(X) - xOffset; 
-		//accY = getAcc(Y); 
-		//accZ = getAcc(Z);
-		//drawAccData(accX, accY, accZ);
-		drawSteps(xOffset);
+		accX = getAcc(X) - xOffset; 
+		accY = getAcc(Y) - yOffset;
+		accZ = getAcc(Z) - zOffset;
+		combinedAcc = (accX + accY + accZ) / 3;
+		if(combinedAcc > 5){
+			drawSteps(combinedAcc);
+			_delay_ms(10);
+			drawString("Idle");
+		}
+		//drawSteps(xOffset);
 		_delay_ms(5);
 	}
 }
@@ -60,7 +65,7 @@ int16_t getAcc(int addr){
 	i2c_stop();
 	//ret = (((int16_t)buffer[0]) << 8) | buffer[1];
 	ret = ((buffer[0]) << 8) | buffer[1];
-	return fabs(ret);
+	return fabs(ret) / 1000;
 	//return (double)(ret)/MPU6050_AGAIN; //Konverterar till g?
 }
 
@@ -96,19 +101,17 @@ void drawAccData(int16_t x, int16_t y, int16_t z){
 }
 
 void getAccOffset(int16_t *ox, int16_t *oy, int16_t *oz){
-	int16_t accX = 0, accY = 0, accZ = 0;
-	drawString("Calibrating");
+	uint32_t accX = 0, accY = 0, accZ = 0;
+	drawString("Calibrating...");
 	for(int i = 0; i < OFFSET_NUM; i++){
 		accX += getAcc(X);
 		accY += getAcc(Y); 
 		accZ += getAcc(Z); 
 		_delay_ms(10);
 	}
-	*ox = accX / OFFSET_NUM;
-	*oy = accY / OFFSET_NUM;
-	*oz = accZ / OFFSET_NUM;
-	drawString("Calibration Done");
-	_delay_ms(1000);
-	drawSteps(*ox);
-	_delay_ms(1000);
+	*ox = (int16_t)(accX / OFFSET_NUM);
+	*oy = (int16_t)(accY / OFFSET_NUM);
+	*oz = (int16_t)(accZ / OFFSET_NUM);
+	drawString("Calib. done");
+	_delay_ms(500);
 }
