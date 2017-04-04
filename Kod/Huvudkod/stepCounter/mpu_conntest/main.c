@@ -15,7 +15,7 @@
 #define Z 0x3F //Adress f�r accelerationdata Z
 
 #define OFFSET_NUM 10
-#define STEP_ACC_TRIGGER 2.5
+#define STEP_ACC_TRIGGER 3
 
 u8g_t u8g;
 
@@ -32,7 +32,7 @@ int main(void) {
 	double accX = 0.0, accY = 0.0, accZ = 0.0;
 	double xOffset = 0.0, yOffset = 0.0, zOffset = 0.0;
 	uint16_t steps = 0;
-	getAccOffset(&xOffset, &yOffset, &zOffset);
+	//getAccOffset(&xOffset, &yOffset, &zOffset);
 	sei();
 	DDRB |= (1 << PB0);
 	/*	 Init MPU 6050	*/
@@ -44,18 +44,10 @@ int main(void) {
 		accY = getAcc(Y) - yOffset;
 		accZ = getAcc(Z) - zOffset;
 		combinedAcc = (accX + accY + accZ);
-		//drawAccData(accX, accY, accZ);
-		while(1){
-			drawAccData(accX, accY, accZ);
-		}
 		if(combinedAcc > STEP_ACC_TRIGGER){
 			steps++;
 			PORTB= 0b00000001;
-			if(!(steps % 10)){
-				drawSteps(steps);
-				_delay_ms(10);
-				drawString("Idle");
-			}
+			drawSteps(steps);
 			_delay_ms(10);
 			PORTB= 0b00000000;
 		}
