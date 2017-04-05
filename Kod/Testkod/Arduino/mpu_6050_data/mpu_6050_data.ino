@@ -4,8 +4,8 @@
 // Public Domain
 #include<Wire.h>
 const int MPU_addr=0x68;  // I2C address of the MPU-6050
-int16_t AcX,AcY,AcZ,combined;
-int steps = 0, offset = 8100;
+int16_t AcX,AcY,AcZ,combined, accIdle=0;
+int steps = 0;
 void setup(){
   Wire.begin();
   Wire.beginTransmission(MPU_addr);
@@ -13,6 +13,18 @@ void setup(){
   Wire.write(0);     // set to zero (wakes up the MPU-6050)
   Wire.endTransmission(true);
   Serial.begin(9600);
+
+  for(int i = 0; i < 10; i++){
+      Wire.beginTransmission(MPU_addr);
+      Wire.write(0x3B);  // starting with register 0x3B (ACCEL_XOUT_H)
+      Wire.endTransmission(false);
+      Wire.requestFrom(MPU_addr,14,true);  // request a total of 14 registers
+      AcX=Wire.read()<<8|Wire.read();  // 0x3B (ACCEL_XOUT_H) & 0x3C (ACCEL_XOUT_L)
+      AcY=Wire.read()<<8|Wire.read();  // 0x3D (ACCEL_YOUT_H) & 0x3E (ACCEL_YOUT_L)
+      AcZ=Wire.read()<<8|Wire.read();  // 0x3F (ACCEL_ZOUT_H) & 0x40 (ACCEL_ZOUT_L)
+      accIdle += ((AcX+AcY+AcZ) / 3);
+  }
+  accIdle /= 10;
 }
 void loop(){
   Wire.beginTransmission(MPU_addr);
@@ -22,7 +34,7 @@ void loop(){
   AcX=Wire.read()<<8|Wire.read();  // 0x3B (ACCEL_XOUT_H) & 0x3C (ACCEL_XOUT_L)
   AcY=Wire.read()<<8|Wire.read();  // 0x3D (ACCEL_YOUT_H) & 0x3E (ACCEL_YOUT_L)
   AcZ=Wire.read()<<8|Wire.read();  // 0x3F (ACCEL_ZOUT_H) & 0x40 (ACCEL_ZOUT_L)
-  combined = ((AcX+AcY+AcZ) / 3) - offset;
+  combined = ((AcX+AcY+AcZ) / 3);
   Serial.println(combined);
   delay(10);
 }
