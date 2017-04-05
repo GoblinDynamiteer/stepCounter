@@ -15,7 +15,7 @@
 #define Z 0x3F //Adress f�r accelerationdata Z
 
 #define OFFSET_NUM 10
-#define STEP_ACC_TRIGGER 3
+#define STEP_ACC_TRIGGER 2.3
 
 u8g_t u8g;
 
@@ -27,7 +27,8 @@ void getAccOffset(double *ox, double *oy, double *oz);
 
 int main(void) {
 	u8g_InitI2C(&u8g, &u8g_dev_ssd1306_128x64_i2c, U8G_I2C_OPT_NONE);
-	u8g_SetFont(&u8g, u8g_font_fub11);
+	u8g_SetFont(&u8g, u8g_font_fub14);
+	drawString("STEPCOUNTER!");
 	double combinedAcc = 0;
 	double accX = 0.0, accY = 0.0, accZ = 0.0;
 	double xOffset = 0.0, yOffset = 0.0, zOffset = 0.0;
@@ -36,9 +37,9 @@ int main(void) {
 	sei();
 	DDRB |= (1 << PB0);
 	/*	 Init MPU 6050	*/
-	mpu6050_init();
+	//mpu6050_init();
 	_delay_ms(50);
-	drawString("Idle");
+
 	while(1) {
 		accX = getAcc(X) - xOffset; 
 		accY = getAcc(Y) - yOffset;
@@ -48,11 +49,12 @@ int main(void) {
 			steps++;
 			PORTB= 0b00000001;
 			drawSteps(steps);
-			_delay_ms(10);
+			_delay_ms(50);
 			PORTB= 0b00000000;
 		}
 		//drawSteps(xOffset);
-		_delay_ms(5);
+		drawSteps(steps++);
+		_delay_ms(100);
 	}
 }
 
