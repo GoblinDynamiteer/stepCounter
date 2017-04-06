@@ -16,28 +16,39 @@ Members
 ---
 
 **Description:**  
-Simple pedometer built with an Atmel Atmega328p MCU and 3-axis accelerometer. Steps are displayed on a small display.
+Simple pedometer built with an Atmel Atmega328p MCU and 3-axis accelerometer.  
+Steps are displayed on a small display.
 
 ---
 
+*Current features:*
+- Pocket wearable
+- Battery powered
+- Displays steps on display
+- Modular - Support for three I2C devices
 
-*Goals:*
-- Pocket/shoe-wearable
+*Future goals / extras:*
+- Smaller size
+- Better step detection
+- Shoe-wearable
 - Bluetooth / phone-app
 - Reset / on-off / screen-on switches
 - Modularization (I2C devices)
 - Screen sleep mode
 - Long battery life
+- 3D printed housing
 
 ---
 
 Current Parts:
 - Atmel Atmega328p
+- Crystal oscillator 16MHz
+- 2x Capacitors 22pF
 - 28 pin MCU socket
 - MPU-9250 Gyro / Accelerometer / Compass Unit
 - Grove connectors for I2C-modules
 - SSD1306 Display
-- Resistors for I2C Line Pull up
+- 2x Resistors 4.7kOhm for I2C Line Pull up
 - LiPo 18650 Battery
 - 18650 Battery holder
 - Mouse housing for prototype
