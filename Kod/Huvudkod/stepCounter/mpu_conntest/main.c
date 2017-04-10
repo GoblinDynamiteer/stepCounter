@@ -18,10 +18,10 @@
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
 #include <string.h>
-#include "i2chw/i2cmaster.h"
 #include <util/delay.h>
 #include <math.h>
 
+#include "i2chw/i2cmaster.h"
 #include "mpu6050/mpu6050.h" //MPU lib
 #include "u8g/u8g.h" //OLED display lib
 
@@ -30,7 +30,6 @@
 #define Y 0x3D
 #define Z 0x3F
 
-#define OFFSET_NUM 10
 #define STEP_ACC_TRIGGER 2.3
 
 u8g_t u8g;
@@ -42,7 +41,6 @@ double accX = 0.0, accY = 0.0, accZ = 0.0;
 double getAcc(int addr);
 void drawSteps(uint16_t steps);
 void drawString(char * string);
-void drawAccData(double x, double y, double z);
 void setAccIdle();
 double getAccXYZ(void);
 
