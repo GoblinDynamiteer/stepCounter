@@ -21,21 +21,23 @@
 #include <util/delay.h>
 #include <math.h>
 
-#include "i2chw/i2cmaster.h"
-#include "mpu6050/mpu6050.h" //MPU lib
-#include "u8g/u8g.h" //OLED display lib
+#include "i2chw/i2cmaster.h" //I2C master library using hardware TWI interface
+#include "mpu6050/mpu6050.h" //MPU6050 lib 0x02
+#include "u8g/u8g.h" 		//Universal 8bit Graphics Library
 
-/* Adresses in MPU-9250 for getting acceleration data	*/
+/* Addresses in MPU-9250 for getting acceleration data	*/
 #define X 0x3B
 #define Y 0x3D
 #define Z 0x3F
 
+/*	 Step trigger treshold 	*/
 #define STEP_ACC_TRIGGER 2.3
 
 u8g_t u8g;
-uint16_t steps = 0;
-double accIdle = 0;
-double accCombined = 0;
+
+uint16_t steps = 0; //Step counter
+double accIdle = 0; //Acceleration idle value
+double accCombined = 0; //Combined XYZ acceleration value
 double accX = 0.0, accY = 0.0, accZ = 0.0;
 
 double getAcc(int addr);
