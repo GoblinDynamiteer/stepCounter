@@ -33,6 +33,8 @@
 /*	 Step trigger treshold 	*/
 #define STEP_ACC_TRIGGER 2.3
 
+#define SET_IDLE_LOOP 10
+
 u8g_t u8g;
 
 uint16_t steps = 0; //Step counter
@@ -62,22 +64,11 @@ int main(void) {
 	setAccIdle();
 	_delay_ms(50);
 
-	DDRB |= (1 << PB0);
-
 	while(1) {
 		accCombined = getAccXYZ();
-		if(!accCombined){
-			PORTB= 0b00000001;
-			_delay_ms(100);
-			PORTB= 0b00000000;
-			_delay_ms(100);
-		}
 		if(fabs(accCombined - accIdle) > STEP_ACC_TRIGGER){
-			steps++;
-			PORTB= 0b00000001;
-			drawSteps(steps);
+			drawSteps(steps++);
 			_delay_ms(50);
-			PORTB= 0b00000000;
 		}
 		_delay_ms(10);
 	}
@@ -109,6 +100,7 @@ double getAcc(int addr){
 /*	 Draw step count to display	*/
 void drawSteps(uint16_t steps){
 	char counterString[6] = "\0";
+	/*	 Integer to string conversion	*/
 	itoa(steps, counterString, 10);
 	u8g_FirstPage(&u8g);
 	do{
@@ -126,10 +118,10 @@ void drawString(char * string){
 
 /* Determine acceleration idle value	*/
 void setAccIdle(){
-	for(int i = 0; i < 10; i++){
+	for(int i = 0; i < SET_IDLE_LOOP; i++){
 		 accIdle += getAccXYZ();
 		 drawString("setAccIdle");
 		 _delay_ms(100);
 	}
-	accIdle /= 10;
+	accIdle /= SET_IDLE_LOOP;
 }
