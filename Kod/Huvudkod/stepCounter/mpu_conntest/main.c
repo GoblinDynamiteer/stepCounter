@@ -20,6 +20,7 @@
 #include <string.h>
 #include <util/delay.h>
 #include <math.h>
+#include <stdio.h>
 
 #include "i2chw/i2cmaster.h" //I2C master library using hardware TWI interface
 #include "mpu6050/mpu6050.h" //MPU6050 lib 0x02
@@ -33,7 +34,10 @@
 /*	 Step trigger treshold 	*/
 #define STEP_ACC_TRIGGER 2.3
 
-#define SET_IDLE_LOOP 10
+#define SET_IDLE_LOOP 20
+
+#define DISPLAY_LINE_HEIGHT 16
+#define DISPLAY_MIDDLE (DISPLAY_LINE_HEIGHT * 2)
 
 u8g_t u8g;
 
@@ -44,7 +48,7 @@ double accX = 0.0, accY = 0.0, accZ = 0.0;
 
 double getAcc(int addr);
 void drawSteps(uint16_t steps);
-void drawString(char * string);
+void drawString(char * string, int line);
 void setAccIdle();
 double getAccXYZ(void);
 
@@ -59,7 +63,8 @@ int main(void) {
 	u8g_SetFont(&u8g, u8g_font_fub14);
 
 	_delay_ms(50);
-	drawString("STEPCOUNTER!");
+	drawString("STEPCOUNTER!", DISPLAY_MIDDLE);
+	_delay_ms(1000);
 
 	setAccIdle();
 	_delay_ms(50);
@@ -82,7 +87,7 @@ double getAccXYZ(void){
 	return (accX + accY + accZ);
 }
 
-/*	 Get acceleration data, input is adress for X, Y or Z	*/
+/*	 Get acceleration data, input is address for X, Y or Z	*/
 double getAcc(int addr){
 	int16_t ret = 0;
 	uint8_t buffer[2];
@@ -99,20 +104,16 @@ double getAcc(int addr){
 
 /*	 Draw step count to display	*/
 void drawSteps(uint16_t steps){
-	char counterString[6] = "\0";
-	/*	 Integer to string conversion	*/
-	itoa(steps, counterString, 10);
-	u8g_FirstPage(&u8g);
-	do{
-		u8g_DrawStr(&u8g, 2, 16, counterString);
-	}while(u8g_NextPage(&u8g));
+	char counterString[20] = "\0";
+	sprintf(counterString, "Steps: %i", steps);
+	drawString(counterString, DISPLAY_MIDDLE);
 }
 
 /*	 Draw text string to display	*/
-void drawString(char * string){
+void drawString(char * string, int line){
 	u8g_FirstPage(&u8g);
 	do{
-		u8g_DrawStr(&u8g, 2, 16*2, string);
+		u8g_DrawStr(&u8g, 2, line, string);
 	}while(u8g_NextPage(&u8g));
 }
 
@@ -120,8 +121,9 @@ void drawString(char * string){
 void setAccIdle(){
 	for(int i = 0; i < SET_IDLE_LOOP; i++){
 		 accIdle += getAccXYZ();
-		 drawString("setAccIdle");
+		 drawString("Calibrating..", DISPLAY_MIDDLE);
 		 _delay_ms(100);
 	}
 	accIdle /= SET_IDLE_LOOP;
+	drawString("Idle..", DISPLAY_MIDDLE);
 }
