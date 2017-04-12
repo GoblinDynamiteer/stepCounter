@@ -19,8 +19,8 @@
 #include <avr/pgmspace.h>
 #include <string.h>
 #include <util/delay.h>
-#include <math.h>
-#include <stdio.h>
+#include <math.h> //fabs()
+#include <stdio.h> //sprintf()
 
 #include "i2chw/i2cmaster.h" //I2C master library using hardware TWI interface
 #include "mpu6050/mpu6050.h" //MPU6050 lib 0x02
@@ -38,6 +38,7 @@
 
 #define DISPLAY_LINE_HEIGHT 16
 #define DISPLAY_MIDDLE (DISPLAY_LINE_HEIGHT * 2)
+#define DISPLAY_SLEEP_DELAY 3000
 
 u8g_t u8g;
 
@@ -45,11 +46,14 @@ uint16_t steps = 0; //Step counter
 double accIdle = 0; //Acceleration idle value
 double accCombined = 0; //Combined XYZ acceleration value
 double accX = 0.0, accY = 0.0, accZ = 0.0;
+int displaySleeping = 0;
+int displaySleepTimer = 0;
 
 double getAcc(int addr);
 void drawSteps(uint16_t steps);
 void drawString(char * string, int line);
 void setAccIdle();
+void toggleDisplaySleep(void);
 double getAccXYZ(void);
 
 int main(void) {
@@ -68,14 +72,25 @@ int main(void) {
 
 	setAccIdle();
 	_delay_ms(50);
-
+	
 	while(1) {
 		accCombined = getAccXYZ();
 		if(fabs(accCombined - accIdle) > STEP_ACC_TRIGGER){
+			if(displaySleeping){
+				toggleDisplaySleep();
+			}
 			drawSteps(steps++);
 			_delay_ms(50);
 		}
 		_delay_ms(10);
+		if(displaySleepTimer++ > DISPLAY_SLEEP_DELAY){
+			displaySleepTimer = 0;
+			if(!displaySleeping){
+				drawString("Sleeping", DISPLAY_MIDDLE);
+				_delay_ms(500);
+				toggleDisplaySleep();
+			}
+		}
 	}
 }
 
@@ -126,4 +141,16 @@ void setAccIdle(){
 	}
 	accIdle /= SET_IDLE_LOOP;
 	drawString("Idle..", DISPLAY_MIDDLE);
+}
+
+/*	 Toggle display sleepmode on/off	*/
+void toggleDisplaySleep(void){
+	if(displaySleeping){
+		u8g_SleepOff(&u8g);
+		displaySleeping = 0;
+	}
+	else{
+		u8g_SleepOn(&u8g);
+		displaySleeping = 1;
+	}
 }
