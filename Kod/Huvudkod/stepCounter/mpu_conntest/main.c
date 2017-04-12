@@ -34,10 +34,11 @@
 /*	 Step trigger treshold 	*/
 #define STEP_ACC_TRIGGER 2.3
 
+/*	 Amount of values taken from MPU to set idle accelleration	*/
 #define SET_IDLE_LOOP 20
 
-#define DISPLAY_LINE_HEIGHT 16
-#define DISPLAY_MIDDLE (DISPLAY_LINE_HEIGHT * 2)
+#define DISPLAY_LINE_HEIGHT 16 //Font size + 2
+#define DISPLAY_MIDDLE (DISPLAY_LINE_HEIGHT * 2 + 2)
 #define DISPLAY_SLEEP_DELAY 3000
 
 u8g_t u8g;
@@ -76,6 +77,7 @@ int main(void) {
 	while(1) {
 		accCombined = getAccXYZ();
 		if(fabs(accCombined - accIdle) > STEP_ACC_TRIGGER){
+			/*	 Wake display if sleeping	*/
 			if(displaySleeping){
 				toggleDisplaySleep();
 			}
@@ -83,11 +85,12 @@ int main(void) {
 			_delay_ms(50);
 		}
 		_delay_ms(10);
+		/*	 Set display to sleep if timer is reached	*/
 		if(displaySleepTimer++ > DISPLAY_SLEEP_DELAY){
 			displaySleepTimer = 0;
 			if(!displaySleeping){
 				drawString("Sleeping", DISPLAY_MIDDLE);
-				_delay_ms(500);
+				_delay_ms(1000);
 				toggleDisplaySleep();
 			}
 		}
@@ -143,7 +146,7 @@ void setAccIdle(){
 	drawString("Idle..", DISPLAY_MIDDLE);
 }
 
-/*	 Toggle display sleepmode on/off	*/
+/*	 Toggle display sleep  mode on/off	*/
 void toggleDisplaySleep(void){
 	if(displaySleeping){
 		u8g_SleepOff(&u8g);

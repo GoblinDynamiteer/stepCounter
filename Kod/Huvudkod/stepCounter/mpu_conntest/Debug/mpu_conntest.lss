@@ -1006,7 +1006,7 @@ void drawSteps(uint16_t steps){
     1abc:	0f 93       	push	r16
     1abe:	0e 94 af 19 	call	0x335e	; 0x335e <sprintf>
 	drawString(counterString, DISPLAY_MIDDLE);
-    1ac2:	60 e2       	ldi	r22, 0x20	; 32
+    1ac2:	62 e2       	ldi	r22, 0x22	; 34
     1ac4:	70 e0       	ldi	r23, 0x00	; 0
     1ac6:	c8 01       	movw	r24, r16
     1ac8:	0e 94 21 0d 	call	0x1a42	; 0x1a42 <drawString>
@@ -1055,7 +1055,7 @@ void setAccIdle(){
     1b1a:	80 93 6e 01 	sts	0x016E, r24	; 0x80016e <accIdle+0x2>
     1b1e:	90 93 6f 01 	sts	0x016F, r25	; 0x80016f <accIdle+0x3>
 		 drawString("Calibrating..", DISPLAY_MIDDLE);
-    1b22:	60 e2       	ldi	r22, 0x20	; 32
+    1b22:	62 e2       	ldi	r22, 0x22	; 34
     1b24:	70 e0       	ldi	r23, 0x00	; 0
     1b26:	8c e2       	ldi	r24, 0x2C	; 44
     1b28:	91 e0       	ldi	r25, 0x01	; 1
@@ -1102,7 +1102,7 @@ void setAccIdle(){
     1b68:	80 93 6e 01 	sts	0x016E, r24	; 0x80016e <accIdle+0x2>
     1b6c:	90 93 6f 01 	sts	0x016F, r25	; 0x80016f <accIdle+0x3>
 	drawString("Idle..", DISPLAY_MIDDLE);
-    1b70:	60 e2       	ldi	r22, 0x20	; 32
+    1b70:	62 e2       	ldi	r22, 0x22	; 34
     1b72:	70 e0       	ldi	r23, 0x00	; 0
     1b74:	8a e3       	ldi	r24, 0x3A	; 58
     1b76:	91 e0       	ldi	r25, 0x01	; 1
@@ -1114,7 +1114,7 @@ void setAccIdle(){
 
 00001b82 <toggleDisplaySleep>:
 
-/*	 Toggle display sleepmode on/off	*/
+/*	 Toggle display sleep  mode on/off	*/
 void toggleDisplaySleep(void){
 	if(displaySleeping){
     1b82:	80 91 5a 01 	lds	r24, 0x015A	; 0x80015a <displaySleeping>
@@ -1189,7 +1189,7 @@ int main(void) {
 
 	_delay_ms(50);
 	drawString("STEPCOUNTER!", DISPLAY_MIDDLE);
-    1bfa:	60 e2       	ldi	r22, 0x20	; 32
+    1bfa:	62 e2       	ldi	r22, 0x22	; 34
     1bfc:	70 e0       	ldi	r23, 0x00	; 0
     1bfe:	81 e4       	ldi	r24, 0x41	; 65
     1c00:	91 e0       	ldi	r25, 0x01	; 1
@@ -1239,6 +1239,7 @@ int main(void) {
     1c60:	0e 94 13 19 	call	0x3226	; 0x3226 <__gesf2>
     1c64:	18 16       	cp	r1, r24
     1c66:	f4 f4       	brge	.+60     	; 0x1ca4 <main+0xee>
+			/*	 Wake display if sleeping	*/
 			if(displaySleeping){
     1c68:	80 91 5a 01 	lds	r24, 0x015A	; 0x80015a <displaySleeping>
     1c6c:	90 91 5b 01 	lds	r25, 0x015B	; 0x80015b <displaySleeping+0x1>
@@ -1274,6 +1275,7 @@ int main(void) {
 			_delay_ms(50);
 		}
 		_delay_ms(10);
+		/*	 Set display to sleep if timer is reached	*/
 		if(displaySleepTimer++ > DISPLAY_SLEEP_DELAY){
     1cb0:	80 91 58 01 	lds	r24, 0x0158	; 0x800158 <__data_end>
     1cb4:	90 91 59 01 	lds	r25, 0x0159	; 0x800159 <__data_end+0x1>
@@ -1296,21 +1298,21 @@ int main(void) {
     1ce0:	09 f0       	breq	.+2      	; 0x1ce4 <main+0x12e>
     1ce2:	a5 cf       	rjmp	.-182    	; 0x1c2e <main+0x78>
 				drawString("Sleeping", DISPLAY_MIDDLE);
-    1ce4:	60 e2       	ldi	r22, 0x20	; 32
+    1ce4:	62 e2       	ldi	r22, 0x22	; 34
     1ce6:	70 e0       	ldi	r23, 0x00	; 0
     1ce8:	8e e4       	ldi	r24, 0x4E	; 78
     1cea:	91 e0       	ldi	r25, 0x01	; 1
     1cec:	0e 94 21 0d 	call	0x1a42	; 0x1a42 <drawString>
     1cf0:	8f ef       	ldi	r24, 0xFF	; 255
-    1cf2:	99 e6       	ldi	r25, 0x69	; 105
-    1cf4:	28 e1       	ldi	r18, 0x18	; 24
+    1cf2:	93 ed       	ldi	r25, 0xD3	; 211
+    1cf4:	20 e3       	ldi	r18, 0x30	; 48
     1cf6:	81 50       	subi	r24, 0x01	; 1
     1cf8:	90 40       	sbci	r25, 0x00	; 0
     1cfa:	20 40       	sbci	r18, 0x00	; 0
     1cfc:	e1 f7       	brne	.-8      	; 0x1cf6 <main+0x140>
     1cfe:	00 c0       	rjmp	.+0      	; 0x1d00 <main+0x14a>
     1d00:	00 00       	nop
-				_delay_ms(500);
+				_delay_ms(1000);
 				toggleDisplaySleep();
     1d02:	0e 94 c1 0d 	call	0x1b82	; 0x1b82 <toggleDisplaySleep>
     1d06:	93 cf       	rjmp	.-218    	; 0x1c2e <main+0x78>
