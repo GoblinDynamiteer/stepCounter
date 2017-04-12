@@ -52,4 +52,15 @@ Inför Rapport
 - Skapat CAD-modeller för Atmega, breadboard, connector hona vinklad, socket
 - Laborerat med Display med Atmega328p - problem med hastigheter / frysningar
 
+2017-04-05
+- Lödit komponenter till kopplingsplatta
+- I2C-moduler fungerar, MPU & display
+- Batteridrivning fungerar
+
+2017-04-06
+- Byggt hölje av optisk mus - byggt "prototyp 2"
+
+2017-04-12
+- Laboration med olika ESP-moduler, inga framsteg
+- Vidarearbete med kod
 
