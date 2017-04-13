@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParamWithValueList xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <version>20080502</version>
+  <parameterTypes>
+    <ParamType>
+      <typeName>Inventor</typeName>
+      <typeCode>0</typeCode>
+    </ParamType>
+    <ParamType>
+      <typeName>String</typeName>
+      <typeCode>1</typeCode>
+    </ParamType>
+    <ParamType>
+      <typeName>Boolean</typeName>
+      <typeCode>2</typeCode>
+    </ParamType>
+  </parameterTypes>
+  <parameters>
+    <ParamWithValue>
+      <name>Thickness</name>
+      <typeCode>mm</typeCode>
+      <value>0.250 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>BendRadius</name>
+      <typeCode>mm</typeCode>
+      <value>0.250 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>BendReliefWidth</name>
+      <typeCode>mm</typeCode>
+      <value>0.250 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>BendReliefDepth</name>
+      <typeCode>mm</typeCode>
+      <value>0.125 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>CornerReliefSize</name>
+      <typeCode>mm</typeCode>
+      <value>1.000 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>MinimumRemnant</name>
+      <typeCode>mm</typeCode>
+      <value>0.500 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>TransitionRadius</name>
+      <typeCode>mm</typeCode>
+      <value>0.250 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>JacobiRadiusSize</name>
+      <typeCode>mm</typeCode>
+      <value>0.250 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>GapSize</name>
+      <typeCode>mm</typeCode>
+      <value>0.250 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>atmegaPinThickness</name>
+      <typeCode>mm</typeCode>
+      <value>0.3 mm</value>
+      <comment />
+      <isKey>false</isKey>
+      <multiValues>
+        <string>0.3 mm</string>
+      </multiValues>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>atmegaPinWidth1</name>
+      <typeCode>mm</typeCode>
+      <value>1.2 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>atmegaPinWidth2</name>
+      <typeCode>mm</typeCode>
+      <value>0.5 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>atmegaEndPinWidth</name>
+      <typeCode>mm</typeCode>
+      <value>0.9 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>atmegaPinBendAngle</name>
+      <typeCode>deg</typeCode>
+      <value>90 deg - 10 deg</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>atmegaPinBaseWidth</name>
+      <typeCode>mm</typeCode>
+      <value>8 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>atmegaPinLenght</name>
+      <typeCode>mm</typeCode>
+      <value>atmegaSeatingPlaneDistance + 4 mm / 2 ul + 0.5 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>atmegaSeatingPlaneDistance</name>
+      <typeCode>mm</typeCode>
+      <value>3.2 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d27</name>
+      <typeCode>mm</typeCode>
+      <value>atmegaPinBaseWidth</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d28</name>
+      <typeCode>mm</typeCode>
+      <value>atmegaPinWidth1</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d29</name>
+      <typeCode>mm</typeCode>
+      <value>0.250 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d40</name>
+      <typeCode>mm</typeCode>
+      <value>BendReliefWidth</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d41</name>
+      <typeCode>mm</typeCode>
+      <value>BendReliefDepth</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d42</name>
+      <typeCode>mm</typeCode>
+      <value>MinimumRemnant</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d43</name>
+      <typeCode>mm</typeCode>
+      <value>TransitionRadius</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d44</name>
+      <typeCode>mm</typeCode>
+      <value>atmegaPinLenght</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d45</name>
+      <typeCode>deg</typeCode>
+      <value>90.0 deg</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d46</name>
+      <typeCode>mm</typeCode>
+      <value>BendRadius</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d47</name>
+      <typeCode>mm</typeCode>
+      <value>CornerReliefSize</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d48</name>
+      <typeCode>mm</typeCode>
+      <value>GapSize</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d49</name>
+      <typeCode>mm</typeCode>
+      <value>JacobiRadiusSize</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d50</name>
+      <typeCode>mm</typeCode>
+      <value>Thickness</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d51</name>
+      <typeCode>deg</typeCode>
+      <value>0 deg</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d52</name>
+      <typeCode>mm</typeCode>
+      <value>atmegaSeatingPlaneDistance</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d54</name>
+      <typeCode>mm</typeCode>
+      <value>atmegaPinWidth2 / 2 ul</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>d56</name>
+      <typeCode>mm</typeCode>
+      <value>2.500 mm</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+  </parameters>
+</ParamWithValueList>
