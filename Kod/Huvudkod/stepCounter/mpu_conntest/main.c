@@ -37,18 +37,18 @@
 /*	 Amount of values taken from MPU to set idle accelleration	*/
 #define SET_IDLE_LOOP 20
 
-#define DISPLAY_LINE_HEIGHT 16 //Font size + 2
-#define DISPLAY_MIDDLE (DISPLAY_LINE_HEIGHT * 2 + 2)
-#define DISPLAY_SLEEP_DELAY 3000
-
-u8g_t u8g;
+/*	 For display	*/
+#define DISPLAY_LINE_HEIGHT 16 //Pixel height for one row on display.
+#define DISPLAY_MIDDLE (DISPLAY_LINE_HEIGHT * 2 + 2) //Middle(ish) of display
+#define DISPLAY_SLEEP_DELAY 3000 //Value for triggering display sleep mode
+u8g_t u8g; //u8g library struct, for holding display data
 
 uint16_t steps = 0; //Step counter
 double accIdle = 0; //Acceleration idle value
 double accCombined = 0; //Combined XYZ acceleration value
 double accX = 0.0, accY = 0.0, accZ = 0.0;
-int displaySleeping = 0;
-int displaySleepTimer = 0;
+int displaySleeping = 0; //"bool" for display sleep mode, set to 1 if sleeping
+int displaySleepTimer = 0; //Timer/ticker for setting display in sleep mode
 
 double getAcc(int addr);
 void drawSteps(uint16_t steps);
@@ -58,22 +58,25 @@ void toggleDisplaySleep(void);
 double getAccXYZ(void);
 
 int main(void) {
-	/*	 Init MPU	*/
+	/*	 Init MPU-9250 - MPU6050 lib*/
 	sei();
 	mpu6050_init();
 	_delay_ms(50);
 
-	/*	 Init display	*/
+	/*	 Init display - u8g lib	*/
 	u8g_InitI2C(&u8g, &u8g_dev_ssd1306_128x64_i2c, U8G_I2C_OPT_NONE);
 	u8g_SetFont(&u8g, u8g_font_fub14);
 
 	_delay_ms(50);
+	/*	 Display start-up text on display	*/
 	drawString("STEPCOUNTER!", DISPLAY_MIDDLE);
 	_delay_ms(1000);
 
+	/*	 Determine and set MPU idle accelerometer value.	*/
 	setAccIdle();
 	_delay_ms(50);
-	
+
+	/*  Main loop	*/
 	while(1) {
 		accCombined = getAccXYZ();
 		if(fabs(accCombined - accIdle) > STEP_ACC_TRIGGER){
@@ -107,7 +110,7 @@ double getAccXYZ(void){
 
 /*	 Get acceleration data, input is address for X, Y or Z	*/
 double getAcc(int addr){
-	int16_t ret = 0;
+	int16_t ret = 0; // return value
 	uint8_t buffer[2];
 	i2c_start(MPU6050_ADDR | I2C_WRITE);
 	i2c_write(addr);
@@ -116,6 +119,7 @@ double getAcc(int addr){
 	buffer[0] = i2c_readAck();
 	buffer[1] = i2c_readNak();
 	i2c_stop();
+	/*	 	*/
 	ret = fabs((((int16_t)buffer[0]) << 8) | buffer[1]);
 	return (double)(ret)/MPU6050_AGAIN;
 }
