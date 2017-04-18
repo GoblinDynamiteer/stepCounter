@@ -64,3 +64,6 @@ Inför Rapport
 - Laboration med olika ESP-moduler, inga framsteg
 - Vidarearbete med kod
 
+2017-04-18
+- Arbete med rapport
+
