@@ -78,12 +78,13 @@ int main(void) {
 
 	/*  Main loop	*/
 	while(1) {
-		accCombined = getAccXYZ();
+		accCombined = getAccXYZ(); // get combined XYZ acceleration value
 		if(fabs(accCombined - accIdle) > STEP_ACC_TRIGGER){
 			/*	 Wake display if sleeping	*/
 			if(displaySleeping){
 				toggleDisplaySleep();
 			}
+			/*	 Show step count on display	*/
 			drawSteps(steps++);
 			_delay_ms(50);
 		}
@@ -112,6 +113,7 @@ double getAccXYZ(void){
 double getAcc(int addr){
 	int16_t ret = 0; // return value
 	uint8_t buffer[2];
+	/*  Read data from MPU Adress	*/
 	i2c_start(MPU6050_ADDR | I2C_WRITE);
 	i2c_write(addr);
 	_delay_us(10);
