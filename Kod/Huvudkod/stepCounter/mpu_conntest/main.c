@@ -50,6 +50,7 @@ double accX = 0.0, accY = 0.0, accZ = 0.0;
 int displaySleeping = 0; //"bool" for display sleep mode, set to 1 if sleeping
 int displaySleepTimer = 0; //Timer/ticker for setting display in sleep mode
 
+/* Function prototypes, main.c*/
 double getAcc(int addr);
 void drawSteps(uint16_t steps);
 void drawString(char * string, int line);
@@ -114,16 +115,21 @@ double getAccXYZ(void){
 double getAcc(int addr){
 	int16_t ret = 0; // return value
 	uint8_t buffer[2];
-	/*  Read data from MPU Adress	*/
+	/*  Read data from MPU-9250 using I2C	*/
 	i2c_start(MPU6050_ADDR | I2C_WRITE);
 	i2c_write(addr);
 	_delay_us(10);
 	i2c_start(MPU6050_ADDR | I2C_READ);
+	/* Acceleration data is from 2x8bit registers (high and low) */
+	/* Read one byte from the I2C device, request more data from device */
 	buffer[0] = i2c_readAck();
+	/* Read one byte from the I2C device,
+	read is followed by a stop condition  */
 	buffer[1] = i2c_readNak();
 	i2c_stop();
-	/*	 	*/
+	/*	 Combine high and low 8-bit data to 16bit	*/
 	ret = fabs((((int16_t)buffer[0]) << 8) | buffer[1]);
+	/*	Return raw data converted to g-forces	*/
 	return (double)(ret)/MPU6050_AGAIN;
 }
 
@@ -153,7 +159,7 @@ void setAccIdle(){
 	drawString("Idle..", DISPLAY_MIDDLE);
 }
 
-/*	 Toggle display sleep  mode on/off	*/
+/*	 Toggle display sleep mode on/off	*/
 void toggleDisplaySleep(void){
 	if(displaySleeping){
 		u8g_SleepOff(&u8g);
