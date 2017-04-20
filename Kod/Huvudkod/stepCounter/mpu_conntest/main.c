@@ -80,6 +80,7 @@ int main(void) {
 	while(1) {
 		accCombined = getAccXYZ(); // get combined XYZ acceleration value
 		if(fabs(accCombined - accIdle) > STEP_ACC_TRIGGER){
+			displaySleepTimer = 0;
 			/*	 Wake display if sleeping	*/
 			if(displaySleeping){
 				toggleDisplaySleep();
